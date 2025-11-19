@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compte à rebours</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        #countdown {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            word-wrap: break-word;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            #countdown {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Fatou a son nouveau téléphone dans :</h1>
+    <div id="countdown">Chargement...</div>
+
+    <script>
+        // ✅ Définir la date cible ici (format ISO : "YYYY-MM-DDTHH:MM:SS")
+        const targetDate = new Date("2025-11-22T09:30:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const countdownEl = document.getElementById('countdown');
+
+            if (distance <= 0) {
+                countdownEl.innerText = "Terminé !";
+                clearInterval(interval);
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownEl.innerText =
+                `${days.toString().padStart(2, '0')}j : ${hours.toString().padStart(2, '0')}h : ${minutes.toString().padStart(2, '0')}m : ${seconds.toString().padStart(2, '0')}s`;
+        }
+
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // ✅ Premier affichage immédiat
+    </script>
+</body>
+</html>
